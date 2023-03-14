@@ -5,7 +5,7 @@ import com.altapay.backend.model.IModelFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-class ShopOrderRepositoryFactory
+public class ShopOrderRepositoryFactory
 {
     private static final Map<String, ShopOrderRepository> instances = new HashMap<>();
 

@@ -17,10 +17,10 @@ public class BackendControllerTests {
 
 	@Mock
 	private ShopOrderRepository shopOrderRepository;
+
 	@Mock
 	private ShopOrder shopOrder;
 
-	// The object to be tested
 	private BackendController controller;
 
 	@Before
@@ -34,7 +34,7 @@ public class BackendControllerTests {
 	}
 	
 	@Test
-	public void captureReservationGetsTheOrderFromTheRepository()
+	public void capturePaymentGetsTheOrderFromTheRepository()
 	{
 		controller.capturePayment(ORDER_ID);
 		
@@ -42,10 +42,42 @@ public class BackendControllerTests {
 	}
 
 	@Test
-	public void captureReservationMustInvokeCaptureOnTheOrder()
+	public void capturePaymentMustInvokeCaptureOnTheOrder()
 	{
 		controller.capturePayment(ORDER_ID);
 		
 		verify(shopOrder).capture();
+	}
+
+	@Test
+	public void capturePaymentSavesTheOrderItLoaded()
+	{
+		controller.capturePayment(ORDER_ID);
+
+		verify(shopOrderRepository).saveShopOrder( shopOrder );
+	}
+
+	@Test
+	public void releasePaymentGetsTheOrderFromTheRepository()
+	{
+		controller.releasePayment(ORDER_ID);
+
+		verify(shopOrderRepository).loadShopOrder(ORDER_ID);
+	}
+
+	@Test
+	public void releasePaymentMustInvokeReleaseOnTheOrder()
+	{
+		controller.releasePayment(ORDER_ID);
+
+		verify(shopOrder).release();
+	}
+
+	@Test
+	public void releasePaymentSavesTheOrderItLoaded()
+	{
+		controller.releasePayment(ORDER_ID);
+
+		verify(shopOrderRepository).saveShopOrder( shopOrder );
 	}
 }

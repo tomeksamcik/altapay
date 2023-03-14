@@ -17,17 +17,17 @@ public class BackendController {
 		ShopOrder order = shopOrderRepository.loadShopOrder(shopOrderId);
 		
 		order.capture();
-		
-		// TODO: Save the model after capturing
+
+		shopOrderRepository.saveShopOrder( order );
 	}
 
 	public void releasePayment(String shopOrderId) 
 	{
-		ShopOrder order = null; // TODO: load the shop order  
+		ShopOrder order = shopOrderRepository.loadShopOrder( shopOrderId );
 		
 		order.release();
-		
-		// TODO: Save the model after releasing
+
+		shopOrderRepository.saveShopOrder( order );
 	}
 
 }
