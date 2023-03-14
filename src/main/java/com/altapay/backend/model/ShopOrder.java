@@ -1,30 +1,22 @@
 package com.altapay.backend.model;
 
+import lombok.Builder;
+import lombok.Setter;
+
 import java.util.List;
 
 
+@Setter
+@Builder
 public class ShopOrder 
 {
-	String id;
-	String paymentId;
-	List<OrderLine> orderLines;
-	
-	public void setId(String id) 
-	{
-		this.id = id;
-	}
+	private String id;
 
-	public void setPaymentId(String paymentId) 
-	{
-		this.paymentId = paymentId;
-	}
-	
-	public void setOrderLines(List<OrderLine> orderLines)
-	{
-		this.orderLines = orderLines;
-	}
+	private String paymentId;
 
-	public void capture() 
+	private final List<OrderLine> orderLines;
+	
+	public void capture()
 	{
 		// TODO: use the InventoryService to check inventory before capturing
 		// TODO: Use the MerchantApiService to capture the payment. 
