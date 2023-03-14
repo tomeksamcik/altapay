@@ -14,7 +14,7 @@ public class ShopOrder
 
 	private String paymentId;
 
-	private final List<OrderLine> orderLines;
+	private List<OrderLine> orderLines;
 	
 	public void capture()
 	{

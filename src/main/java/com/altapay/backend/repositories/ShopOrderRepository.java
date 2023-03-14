@@ -1,24 +1,18 @@
 package com.altapay.backend.repositories;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.altapay.backend.exceptions.UnableToLoadPaymentIdForShopOrderException;
 import com.altapay.backend.model.IModelFactory;
 import com.altapay.backend.model.OrderLine;
 import com.altapay.backend.model.Product;
 import com.altapay.backend.model.ShopOrder;
 
-public class ShopOrderRepository {
-	
-	private IModelFactory modelFactory;
+import java.util.ArrayList;
+import java.util.List;
 
-	public ShopOrderRepository(IModelFactory modelFactory)
+public class ShopOrderRepository {
+
+	private final IModelFactory modelFactory;
+
+	ShopOrderRepository(IModelFactory modelFactory)
 	{
 		this.modelFactory = modelFactory;
 	}
@@ -27,7 +21,7 @@ public class ShopOrderRepository {
 	{
 		ShopOrder order = modelFactory.getShopOrder(); 
 		order.setId(shopOrderId);
-		List<OrderLine> orderLines = new ArrayList<OrderLine>();
+		List<OrderLine> orderLines = new ArrayList<>();
 		orderLines.add(getOrderLine("1","Keyboard",1));
 		order.setOrderLines(orderLines);
 		return order;

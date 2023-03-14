@@ -1,10 +1,9 @@
 package com.altapay.backend.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class ShopOrderTest {
 
@@ -13,9 +12,9 @@ public class ShopOrderTest {
 	private ShopOrder order;
 
 	@Before
-	public void setUp() throws Exception 
+	public void setUp()
 	{
-		order = new ShopOrder();
+		order = ShopOrder.builder().build();
 		order.setId(ID);
 		order.setPaymentId(PAYMENTID);
 	}
