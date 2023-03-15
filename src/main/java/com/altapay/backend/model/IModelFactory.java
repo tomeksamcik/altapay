@@ -1,12 +1,12 @@
 package com.altapay.backend.model;
 
-public interface IModelFactory 
+public interface IModelFactory
 {
-	ShopOrder getShopOrder();
+    ShopOrder getShopOrder();
 
-	Inventory getInventory();
-	
-	OrderLine getOrderLine();
-	
-	Product getProduct();
+    Inventory getInventory();
+
+    OrderLine getOrderLine();
+
+    Product getProduct();
 }

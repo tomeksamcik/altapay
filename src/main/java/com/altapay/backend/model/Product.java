@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Product 
+public class Product
 {
-	private String id;
+    private String id;
 
-	private String name;
+    private String name;
 }

@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Inventory 
+public class Inventory
 {
-	private Product product;
+    private Product product;
 
-	private int count;
+    private int count;
 }

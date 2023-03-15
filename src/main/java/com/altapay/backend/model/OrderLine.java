@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class OrderLine 
+public class OrderLine
 {
-	private Product product;
+    private Product product;
 
-	private int quantity;
+    private int quantity;
 }

@@ -13,16 +13,22 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class ShopOrderTest {
+public class ShopOrderTest
+{
 
     private static final String PRODUCT_NAME = "Product A";
+
     private static final String PRODUCT_ID = "1";
+
     private OrderLine orderLine;
+
     private Product product;
 
-	private static final String ID = "orderid";
-	private static final String PAYMENTID = "paymentid";
-	private ShopOrder order;
+    private static final String ID = "orderid";
+
+    private static final String PAYMENTID = "paymentid";
+
+    private ShopOrder order;
 
     @Mock
     private InventoryService inventoryService;
@@ -31,9 +37,9 @@ public class ShopOrderTest {
     private MerchantApiService merchantApiService;
 
     @Before
-	public void setUp()
-	{
-        MockitoAnnotations.initMocks(this);
+    public void setUp()
+    {
+        MockitoAnnotations.initMocks( this );
 
         product = Product.builder()
             .name( PRODUCT_NAME )
@@ -54,7 +60,7 @@ public class ShopOrderTest {
             .paymentId( PAYMENTID )
             .id( ID )
             .build();
-	}
+    }
 
     @Test
     public void executeCapture_inventoryIsNotChecked() throws Exception
@@ -70,9 +76,9 @@ public class ShopOrderTest {
     }
 
     @Test
-	public void executeCapture_inventoryIsChecked_paymentNotCaptured() throws Exception
-	{
-	    final var captureResponse = mock( CaptureResponse.class );
+    public void executeCapture_inventoryIsChecked_paymentNotCaptured() throws Exception
+    {
+        final var captureResponse = mock( CaptureResponse.class );
 
         when( inventoryService.checkInventory( product, orderLine.getQuantity() ) )
             .thenReturn( true );
@@ -84,7 +90,7 @@ public class ShopOrderTest {
         verify( inventoryService ).checkInventory( product, orderLine.getQuantity() );
         verify( merchantApiService ).capturePayment( order );
         verify( inventoryService, never() ).takeFromInventory( product, orderLine.getQuantity() );
-	}
+    }
 
     @Test
     public void executeCapture_inventoryIsChecked_paymentCaptureThrowsAnException() throws Exception
@@ -118,14 +124,14 @@ public class ShopOrderTest {
         verify( merchantApiService ).capturePayment( order );
         verify( inventoryService ).takeFromInventory( product, orderLine.getQuantity() );
     }
-		
-	@Test
-	public void executeRelease_paymentIsReleasedThroughApiService()
+
+    @Test
+    public void executeRelease_paymentIsReleasedThroughApiService()
         throws MerchantApiServiceException
-	{
+    {
         order.release();
 
         verify( merchantApiService ).releasePayment( order );
-	}
+    }
 
 }
