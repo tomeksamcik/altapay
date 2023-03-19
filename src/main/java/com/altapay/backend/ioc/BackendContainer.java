@@ -2,7 +2,7 @@ package com.altapay.backend.ioc;
 
 import com.altapay.backend.model.*;
 
-public class BackendContainer implements IModelFactory
+public class BackendContainer implements ModelFactory
 {
 
     @Override
