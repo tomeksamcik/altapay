@@ -1,10 +1,9 @@
-package com.altapay.backend.model;
+package com.altapay.backend.services;
 
 import com.altapay.backend.exceptions.MerchantApiServiceException;
-import com.altapay.backend.services.CaptureResponse;
-import com.altapay.backend.services.InventoryService;
-import com.altapay.backend.services.MerchantApiService;
-import com.altapay.backend.services.ShopOrderService;
+import com.altapay.backend.model.OrderLine;
+import com.altapay.backend.model.Product;
+import com.altapay.backend.model.ShopOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -14,7 +13,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class ShopOrderTest
+public class ShopOrderServiceTest
 {
     private static final String PRODUCT_NAME = "Product A";
 
