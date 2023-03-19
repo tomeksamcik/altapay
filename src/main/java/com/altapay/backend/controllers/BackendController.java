@@ -2,22 +2,31 @@ package com.altapay.backend.controllers;
 
 import com.altapay.backend.model.ShopOrder;
 import com.altapay.backend.repositories.ShopOrderRepository;
+import com.altapay.backend.services.ShopOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class BackendController
 {
 
     private ShopOrderRepository shopOrderRepository;
 
-    public BackendController( ShopOrderRepository shopOrderRepository )
+    private ShopOrderService shopOrderService;
+
+    @Autowired
+    public BackendController(
+        ShopOrderRepository shopOrderRepository, ShopOrderService shopOrderService )
     {
         this.shopOrderRepository = shopOrderRepository;
+        this.shopOrderService = shopOrderService;
     }
 
     public void capturePayment( String shopOrderId )
     {
         ShopOrder order = shopOrderRepository.loadShopOrder( shopOrderId );
 
-        order.capture();
+        shopOrderService.capture( order );
 
         shopOrderRepository.saveShopOrder( order );
     }
@@ -26,7 +35,7 @@ public class BackendController
     {
         ShopOrder order = shopOrderRepository.loadShopOrder( shopOrderId );
 
-        order.release();
+        shopOrderService.release( order );
 
         shopOrderRepository.saveShopOrder( order );
     }

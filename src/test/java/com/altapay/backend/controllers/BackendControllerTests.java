@@ -2,6 +2,7 @@ package com.altapay.backend.controllers;
 
 import com.altapay.backend.model.ShopOrder;
 import com.altapay.backend.repositories.ShopOrderRepository;
+import com.altapay.backend.services.ShopOrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -12,16 +13,17 @@ import static org.mockito.Mockito.when;
 
 public class BackendControllerTests
 {
-
     private static final String ORDER_ID = "Some order id";
+
+    private BackendController controller;
 
     @Mock
     private ShopOrderRepository shopOrderRepository;
 
     @Mock
-    private ShopOrder shopOrder;
+    private ShopOrderService shopOrderService;
 
-    private BackendController controller;
+    private ShopOrder shopOrder = ShopOrder.builder().build();
 
     @Before
     public void setup()
@@ -30,7 +32,7 @@ public class BackendControllerTests
 
         when( shopOrderRepository.loadShopOrder( ORDER_ID ) ).thenReturn( shopOrder );
 
-        controller = new BackendController( shopOrderRepository );
+        controller = new BackendController( shopOrderRepository, shopOrderService );
     }
 
     @Test
@@ -46,7 +48,7 @@ public class BackendControllerTests
     {
         controller.capturePayment( ORDER_ID );
 
-        verify( shopOrder ).capture();
+        verify( shopOrderService ).capture( shopOrder );
     }
 
     @Test
@@ -70,7 +72,7 @@ public class BackendControllerTests
     {
         controller.releasePayment( ORDER_ID );
 
-        verify( shopOrder ).release();
+        verify( shopOrderService ).release( shopOrder );
     }
 
     @Test
@@ -80,4 +82,5 @@ public class BackendControllerTests
 
         verify( shopOrderRepository ).saveShopOrder( shopOrder );
     }
+
 }

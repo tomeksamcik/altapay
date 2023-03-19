@@ -1,8 +1,11 @@
 package com.altapay.util;
 
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.net.URL;
 
+@Service
 public final class HttpUtil
 {
     public StringBuffer doPostAuthorized(

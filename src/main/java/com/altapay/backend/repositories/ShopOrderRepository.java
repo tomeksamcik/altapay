@@ -1,9 +1,10 @@
 package com.altapay.backend.repositories;
 
-import com.altapay.backend.model.IModelFactory;
+import com.altapay.backend.ioc.BackendContainer;
 import com.altapay.backend.model.OrderLine;
 import com.altapay.backend.model.Product;
 import com.altapay.backend.model.ShopOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,12 @@ import java.util.List;
 public class ShopOrderRepository
 {
 
-    private final IModelFactory modelFactory;
-
-    ShopOrderRepository( IModelFactory modelFactory )
-    {
-        this.modelFactory = modelFactory;
-    }
+    @Autowired
+    private BackendContainer backendContainer;
 
     public ShopOrder loadShopOrder( String shopOrderId )
     {
-        ShopOrder order = modelFactory.getShopOrder();
+        ShopOrder order = backendContainer.getShopOrder();
         order.setId( shopOrderId );
         List<OrderLine> orderLines = new ArrayList<>();
         orderLines.add( getOrderLine( "1", "Keyboard", 1 ) );
@@ -30,8 +27,8 @@ public class ShopOrderRepository
 
     private OrderLine getOrderLine( String productId, String name, int quantity )
     {
-        OrderLine orderLine = modelFactory.getOrderLine();
-        Product product = modelFactory.getProduct();
+        OrderLine orderLine = backendContainer.getOrderLine();
+        Product product = backendContainer.getProduct();
         product.setId( productId );
         product.setName( name );
         orderLine.setProduct( product );

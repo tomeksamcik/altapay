@@ -1,6 +1,8 @@
 package com.altapay.util;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class XpathUtil
 {
     public String xpath( String source, String xpathString )

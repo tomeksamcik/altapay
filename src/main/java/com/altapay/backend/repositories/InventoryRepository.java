@@ -1,7 +1,9 @@
 package com.altapay.backend.repositories;
 
 import com.altapay.backend.model.Inventory;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class InventoryRepository
 {
     public Inventory load( String productId )

@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework:spring-context:5.2.8.RELEASE'
     compileOnly 'org.projectlombok:lombok:1.18.26'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.26'

@@ -4,6 +4,7 @@ import com.altapay.backend.exceptions.MerchantApiServiceException;
 import com.altapay.backend.services.CaptureResponse;
 import com.altapay.backend.services.InventoryService;
 import com.altapay.backend.services.MerchantApiService;
+import com.altapay.backend.services.ShopOrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,26 +16,27 @@ import static org.mockito.Mockito.*;
 
 public class ShopOrderTest
 {
-
     private static final String PRODUCT_NAME = "Product A";
 
     private static final String PRODUCT_ID = "1";
-
-    private OrderLine orderLine;
-
-    private Product product;
 
     private static final String ID = "orderid";
 
     private static final String PAYMENTID = "paymentid";
 
+    private OrderLine orderLine;
+
     private ShopOrder order;
+
+    private Product product;
 
     @Mock
     private InventoryService inventoryService;
 
     @Mock
     private MerchantApiService merchantApiService;
+
+    private ShopOrderService shopOrderService;
 
     @Before
     public void setUp()
@@ -54,12 +56,13 @@ public class ShopOrderTest
         List<OrderLine> orderLines = List.of( orderLine );
 
         order = ShopOrder.builder()
-            .merchantApiService( merchantApiService )
-            .inventoryService( inventoryService )
             .orderLines( orderLines )
             .paymentId( PAYMENTID )
             .id( ID )
             .build();
+
+        shopOrderService =
+            new ShopOrderService( inventoryService, merchantApiService );
     }
 
     @Test
@@ -68,7 +71,7 @@ public class ShopOrderTest
         when( inventoryService.checkInventory( product, orderLine.getQuantity() ) )
             .thenReturn( false );
 
-        order.capture();
+        shopOrderService.capture( order );
 
         verify( inventoryService ).checkInventory( product, orderLine.getQuantity() );
         verify( merchantApiService, never() ).capturePayment( order );
@@ -85,7 +88,7 @@ public class ShopOrderTest
         when( merchantApiService.capturePayment( order ) ).thenReturn( captureResponse );
         when( captureResponse.wasSuccessful() ).thenReturn( false );
 
-        order.capture();
+        shopOrderService.capture( order );
 
         verify( inventoryService ).checkInventory( product, orderLine.getQuantity() );
         verify( merchantApiService ).capturePayment( order );
@@ -100,7 +103,7 @@ public class ShopOrderTest
         when( merchantApiService.capturePayment( order ) )
             .thenThrow( new MerchantApiServiceException() );
 
-        order.capture();
+        shopOrderService.capture( order );
 
         verify( inventoryService ).checkInventory( product, orderLine.getQuantity() );
         verify( merchantApiService ).capturePayment( order );
@@ -118,7 +121,7 @@ public class ShopOrderTest
         when( merchantApiService.capturePayment( order ) ).thenReturn( captureResponse );
         when( captureResponse.wasSuccessful() ).thenReturn( true );
 
-        order.capture();
+        shopOrderService.capture( order );
 
         verify( inventoryService ).checkInventory( product, orderLine.getQuantity() );
         verify( merchantApiService ).capturePayment( order );
@@ -129,7 +132,7 @@ public class ShopOrderTest
     public void executeRelease_paymentIsReleasedThroughApiService()
         throws MerchantApiServiceException
     {
-        order.release();
+        shopOrderService.release( order );
 
         verify( merchantApiService ).releasePayment( order );
     }
