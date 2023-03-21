@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ShopOrderService
 {
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
-    private MerchantApiService merchantApiService;
+    private final MerchantApiService merchantApiService;
 
     @Autowired
     public ShopOrderService(

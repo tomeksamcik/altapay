@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class InventoryService
 {
-    private InventoryRepository repository;
+    private final InventoryRepository repository;
 
     @Autowired
     public InventoryService( InventoryRepository repository )

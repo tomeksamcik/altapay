@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MerchantApiService
 {
-    private HttpUtil httpUtil;
+    private final HttpUtil httpUtil;
 
-    private XpathUtil xpathUtil;
+    private final XpathUtil xpathUtil;
 
     @Autowired
     public MerchantApiService( HttpUtil httpUtil, XpathUtil xpathUtil )
