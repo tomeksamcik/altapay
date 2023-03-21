@@ -18,7 +18,7 @@ public class ShopOrderService
         this.merchantApiService = merchantApiService;
     }
 
-    public void capture( ShopOrder shopOrder )
+    public synchronized void capture( ShopOrder shopOrder )
     {
         shopOrder.getOrderLines().forEach( orderLine ->
         {
